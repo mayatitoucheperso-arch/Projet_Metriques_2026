@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8" />
+  <title>Histogramme des températures — Paris</title>
+  <script src="https://www.gstatic.com/charts/loader.js"></script>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 24px; }
+    #chart { width: 100%; height: 520px; }
+    #status { margin-top: 12px; }
+  </style>
+</head>
+<body>
+  <h1>Histogramme des températures — Paris</h1>
+  <div id="chart"></div>
+  <div id="status"></div>
+
+  <script>
+    google.charts.load('current', { packages: ['corechart'] });
+    google.charts.setOnLoadCallback(draw);
+
+    async function draw() {
+      try {
+        const res = await fetch('/paris');
+        if (!res.ok) throw new Error('Erreur sur /paris : ' + res.status);
+
+        const json = await res.json();
+
+        const data = new google.visualization.DataTable();
+        data.addColumn('string', 'Heure');
+        data.addColumn('number', 'Température');
+
+        json.slice(0, 24).forEach(p => {
+          data.addRow([p.datetime.slice(11, 16), Number(p.temperature_c)]);
+        });
+
+        const options = {
+          title: 'Température à Paris sur 24h',
+          legend: { position: 'none' },
+          hAxis: { title: 'Heure' },
+          vAxis: { title: '°C' }
+        };
+
+        const chart = new google.visualization.ColumnChart(document.getElementById('chart'));
+        chart.draw(data, options);
+
+        document.getElementById('status').textContent =
+          'OK — 24 barres chargées depuis /paris';
+      } catch (e) {
+        document.getElementById('status').textContent = 'Erreur : ' + e.message;
+        console.error(e);
+      }
+    }
+  </script>
+</body>
+</html>
