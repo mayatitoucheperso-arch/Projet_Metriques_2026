@@ -299,4 +299,4 @@ Objectif : Visualiser ses logs et découvrir ses erreurs
 ---------------------------------------------------
 Lors de vos développements, vous serez peut-être confronté à des erreurs systèmes car vous aurez faits des erreurs de syntaxes dans votre code, faits de mauvaises déclarations de fonctions, appelez des modules inexistants, mal renseigner vos secrets, etc…  
    
-Les causes d'erreurs sont quasi illimitées. **Vous devez donc vous tourner vers les logs de votre serveur via le terminal de Codespace pour comprendre d'où vient le problème**  
+Les causes d'erreurs sont quasi illimitées. **Vous devez donc vous tourner vers les logs de votre serveur via le terminal de Codespace pour comprendre d'où vient le problème**
